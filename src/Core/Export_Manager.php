@@ -1,30 +1,39 @@
 <?php
+// src/Core/Export_Manager.php
 namespace Ecatalogue\Core;
+
+use Ecatalogue\Core\Product_Fetcher;
+use Ecatalogue\Core\PDF_Generator;
 
 class Export_Manager {
 
     public static function handle_export(): void {
+        // 1️⃣ Security check
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_die( __( 'Permission denied', 'ecatalogue' ) );
         }
 
-        // For a real plugin you’d verify nonce, sanitise inputs, etc.
+        // 2️⃣ Optional security nonce validation
+        // check_admin_referer( 'ecatalogue_export_action', 'ecatalogue_export_nonce' );
 
-        // 1️⃣ Get products
+        // 3️⃣ Fetch products (simple + variable)
         $fetcher  = new Product_Fetcher();
         $products = $fetcher->get_products();
 
-        // 2️⃣ Build PDF
-        $generator = new PDF_Generator();
-        $pdf_data = $generator->generate( $products );
+        if ( empty( $products ) ) {
+            wp_die( __( 'No products found.', 'ecatalogue' ) );
+        }
 
-        // 3️⃣ Send PDF to browser for download
-        $file_name = 'ecatalogue-' . date( 'Y-m-d-H-i-s' ) . '.pdf';
+        // 4️⃣ Generate PDF
+        $generator = new PDF_Generator();
+        $pdf_data  = $generator->generate( $products );
+
+        // 5️⃣ Send as a download
         header( 'Content-Type: application/pdf' );
-        header( "Content-Disposition: attachment; filename=\"$file_name\"" );
+        header( 'Content-Disposition: attachment; filename="ecatalogue.pdf"' );
         header( 'Cache-Control: no-cache, must-revalidate' );
         header( 'Expires: 0' );
-        echo $pdf_data;
-        exit;
+        echo $pdf_data;   // the PDF binary string
+        exit;             // stop WordPress further output
     }
 }
