@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: E‑Catalogue for WooCommerce
- * Plugin URI:  https://github.com/yourname/ecatalogue-for-woocommerce
+ * Plugin URI:  https://github.com/mg-gouda/ecatalogue-for-woocommerce.git
  * Description: Generate customizable PDF catalogs for WooCommerce products.
  * Version:     0.1.0
  * Author:      Mohamed Gouda
- * Author URI:  https://yourwebsite.com
+ * Author URI:  https://github.com/mg-gouda/ecatalogue-for-woocommerce.git
  * Text Domain: ecatalogue
  * Domain Path: /languages
  * License:     MIT

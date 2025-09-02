@@ -1,5 +1,5 @@
 {
-    "name": "yourname/ecatalogue-for-woocommerce",
+    "name": "mohamedgouda/ecatalogue-for-woocommerce",
     "description": "Generate PDF catalogs from WooCommerce products.",
     "type": "wordpress-plugin",
     "require": {
